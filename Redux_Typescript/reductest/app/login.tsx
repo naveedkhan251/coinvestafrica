@@ -3,16 +3,17 @@ import { Text, View, StyleSheet, TextInput, Button, Pressable, Dimensions, Platf
 import { Image } from 'expo-image';
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from 'expo-image-picker';
-import {app, auth} from '../components/Services/Firebase';
+import {app, auth} from '../Services/Firebase';
 import { getDatabase, ref, set } from "firebase/database";
 import { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, getAuth } from "firebase/auth";
 import ImageViewer from "@/components/ImageViewer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch } from "@/hooks/Store/hooks";
 
-const PlaceholderImage = require('@/assets/images/background-image.png');
+const PlaceholderImage = require('@/assets/images/react-logo.png');
 
-export default function LoginPage() {
+export default function login() {
 
   const [email, setEmail] = useState<string>('naveedkhan@gmail.com');
   const [password, setPassword] = useState<string>('0346asdff');
@@ -27,6 +28,7 @@ export default function LoginPage() {
 
  // debugger;
   ///const statess = useSelector((state)=> state);
+var dispatch = useDispatch();
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -58,6 +60,12 @@ debugger;
           const user = userCredential.user;
           var uid = user.uid;
           const db = getDatabase(app);
+          var newAdd = {
+            fullName: fullName,
+            email: email,
+            profile_picture : selectedImage,
+            phoneNumber:phoneNumber
+          };
           set(ref(db, 'users/' + uid), {
             fullName: fullName,
             email: email,
@@ -66,7 +74,8 @@ debugger;
           }).then((res)=>{
               debugger;
              setIsLoading(false);
-              router.navigate("/(tabs)/");
+             dispatch({type : "UserSuccess" , payload:newAdd });
+              router.navigate("/(tabs)");
           }).catch((err)=>{
               debugger;
               setIsLoading(false);
@@ -93,6 +102,12 @@ debugger;
             const user = userCredential.user;
             var uid = user.uid;
             const db = getDatabase(app);
+            var newAdd = {
+              fullName: 'ggg',
+              email: email,
+              profile_picture : '',
+              phoneNumber:'da agha dagha '
+            };
             set(ref(db, 'users/' + uid), {
               username: email,
               email: email,
@@ -100,8 +115,9 @@ debugger;
               phoneNumber:"LPC"
             }).then((res)=>{
                 debugger;
+                dispatch({type : "UserSuccess" , payload:newAdd });
                setIsLoading(false);
-                router.navigate("/(tabs)/");
+                router.navigate("/(tabs)");
             }).catch((err)=>{
                 debugger;
                 setIsLoading(false);

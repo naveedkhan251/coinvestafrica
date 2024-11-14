@@ -4,7 +4,7 @@ import { Image } from 'expo-image';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect } from "react";
 
-const PlaceholderImage = require('@/assets/images/background-image.png');
+const PlaceholderImage = require('@/assets/images/react-logo.png');
 
 export default function SplashScreen() {
 
@@ -14,17 +14,14 @@ export default function SplashScreen() {
 
   useEffect(()=>{
 //   debugger;
-    setTimeout(()=>{router.navigate("/Login") }, 1000);
+    setTimeout(()=>{router.navigate('/login') }, 2000);
 
   });
 
 
   return (
     <View style={styles.container}>
-
-          
-               <Image style={{height:screenHeight, width:screenWidth}} source={PlaceholderImage}/>
-          
+       <Image style={{height:screenHeight, width:screenWidth}} source={PlaceholderImage}/>          
     </View>
   );
 }

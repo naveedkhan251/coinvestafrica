@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet } from 'react-native';
 import { getAuth } from "firebase/auth";
-import { auth } from '@/components/Services/Firebase';
+import { auth } from '@/Services/Firebase';
 import { useEffect } from 'react';
 
 export default function AboutScreen() {
